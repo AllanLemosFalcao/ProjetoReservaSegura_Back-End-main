@@ -26,8 +26,8 @@ API REST do aplicativo gamificado de educação financeira que suporta as funcio
 | Recurso | Link |
 |---------|------|
 | 🌐 Aplicação em Produção | [projeto-reserva-segura-front-end.vercel.app](https://projeto-reserva-segura-front-end.vercel.app/) |
-| 🎨 Repositório Front-End | [Projeto-Reserva-Segura_Take-Off](https://github.com/EdmaelBarretto/Projeto-Reserva-Segura_Take-Off) |
-| ⚙️ Repositório Back-End | [ProjetoReservaSegura_Back-End](https://github.com/EdmaelBarretto/ProjetoReservaSegura_Back-End) |
+| 🎨 Repositório Front-End | [Projeto-Reserva-Segura_Take-Off](https://github.com/AllanLemosFalcao/projeto-reserva-segura-frontend) |
+| ⚙️ Repositório Back-End + Script Banco de dados MySQL | [ProjetoReservaSegura_Back-End + Banco de dados](https://github.com/AllanLemosFalcao/ProjetoReservaSegura_Back-End-main-End) |
 | 🛡️ Repositório QA | [Reserva-Segura-QA](https://github.com/EdmaelBarretto/Reserva-Segura-QA) |
 
 ---
@@ -55,7 +55,7 @@ O backend do **Reserva Segura** é uma API desenvolvida em Spring Boot que forne
 - **Spring Boot 3**
 - **Spring Security** com JWT
 - **Spring Data JPA** com Hibernate
-- **PostgreSQL** como banco de dados
+- **MySQL** como banco de dados relacional
 - **Maven** como gerenciador de dependências
 - **Lombok** para redução de boilerplate
 - **Railway** para deploy em produção
@@ -105,25 +105,41 @@ O backend do **Reserva Segura** é uma API desenvolvida em Spring Boot que forne
 - [Java 17](https://adoptium.net/)
 - [Maven](https://maven.apache.org/)
 - [IntelliJ IDEA](https://www.jetbrains.com/idea/) (recomendado)
-- PostgreSQL local ou acesso ao banco no Railway
+- **MySQL local** instalado (ou via XAMPP / MySQL Workbench)
 
 ### 2. Clonar o Repositório
 
 ```bash
-git clone https://github.com/EdmaelBarretto/ProjetoReservaSegura_Back-End.git
-cd ProjetoReservaSegura_Back-End
+git clone [https://github.com/AllanLemosFalcao/ProjetoReservaSegura_Back-End-main.git](https://github.com/AllanLemosFalcao/ProjetoReservaSegura_Back-End-main.git)
+cd ProjetoReservaSegura_Back-End-main
 ```
 
-### 3. Configurar o Banco de Dados
+### 3. Configurar a Base de Dados
 
-Edite o arquivo `src/main/resources/application.properties`:
+Edite o ficheiro `src/main/resources/application.properties` com as credenciais do seu ambiente local:
 
 ```properties
-spring.datasource.url=jdbc:postgresql://localhost:5432/reservasegura
-spring.datasource.username=postgres
-spring.datasource.password=sua_senha
-jwt.secret=sua_chave_secreta
-```
+# Configuração da Base de Dados MySQL
+spring.datasource.url=jdbc:mysql://localhost:3306/reserva_segura?createDatabaseIfNotExist=true&serverTimezone=UTC
+spring.datasource.username=root
+spring.datasource.password=sua_senha_aqui
+
+# Driver do MySQL
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+# Configurações do Hibernate/JPA
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+
+# Configuração da Porta da API
+server.port=8080
+
+# 🔐 Configurações do JWT
+jwt.secret=sua_chave_secreta_super_segura_aqui
+jwt.expiration=86400000
+
+*(Lembre-se de criar o schema `reserva_segura` no seu MySQL antes de rodar a aplicação)*
 
 ### 4. Rodar o Projeto
 
@@ -141,35 +157,15 @@ A API estará disponível em: `http://localhost:8080`
 
 ## 📁 Estrutura do Projeto
 
-```
+```text
 reservasegura/
 ├── src/main/java/br/com/reservasegura/
 │   ├── controller/
-│   │   ├── AuthController.java
-│   │   ├── GoalController.java
-│   │   ├── MissionController.java
-│   │   ├── StatsController.java
-│   │   └── TransactionController.java
 │   ├── dto/
-│   │   ├── AuthResponse.java
-│   │   ├── LoginRequest.java
-│   │   ├── RegisterRequest.java
-│   │   └── ...
 │   ├── entity/
-│   │   ├── User.java
-│   │   ├── Goal.java
-│   │   ├── Transaction.java
-│   │   ├── Mission.java
-│   │   └── MissionProgress.java
 │   ├── repository/
 │   ├── security/
-│   │   ├── JwtService.java
-│   │   ├── JwtFilter.java
-│   │   └── SecurityConfig.java
 │   └── service/
-│       ├── UserService.java
-│       ├── GoalService.java
-│       └── TransactionService.java
 └── src/main/resources/
     └── application.properties
 ```
@@ -182,7 +178,7 @@ reservasegura/
 
 | Variável | Descrição |
 |----------|-----------|
-| `SPRING_DATASOURCE_URL` | URL JDBC do banco PostgreSQL |
+| `SPRING_DATASOURCE_URL` | URL JDBC do banco MySQL |
 | `SPRING_DATASOURCE_USERNAME` | Usuário do banco |
 | `SPRING_DATASOURCE_PASSWORD` | Senha do banco |
 | `JWT_SECRET` | Chave secreta para geração de tokens |
@@ -190,9 +186,7 @@ reservasegura/
 
 ### URL de Produção
 
-```
-https://projetoreservaseguraback-end-production.up.railway.app
-```
+`https://projetoreservaseguraback-end-production.up.railway.app`
 
 ---
 
@@ -201,9 +195,7 @@ https://projetoreservaseguraback-end-production.up.railway.app
 - Autenticação via **JWT Bearer Token**
 - Endpoints públicos: `/auth/register` e `/auth/login`
 - Todos os demais endpoints exigem token válido no header:
-  ```
-  Authorization: Bearer <token>
-  ```
+  `Authorization: Bearer <token>`
 
 ---
 
