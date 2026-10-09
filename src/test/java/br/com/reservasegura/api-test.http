@@ -1,0 +1,128 @@
+### ✅ CT01 - Cadastrar usuário com sucesso
+POST http://localhost:8080/auth/register
+Content-Type: application/json
+
+{
+  "nome": "Edmael Barreto",
+  "email": "EdmaeltesteReservaSegura@email.com",
+  "cpf": "11345678901",
+  "senha": "123421"
+}
+
+### ❌ CT02 - Cadastrar com email já existente
+POST http://localhost:8080/auth/register
+Content-Type: application/json
+
+{
+  "nome": "Edmael Barreto",
+  "email": "EdmaeltesteReservaSegura@email.com",
+  "cpf": "11345678901",
+  "senha": "123421"
+}
+
+### ❌ CT03 - Cadastrar com CPF já existente
+POST http://localhost:8080/auth/register
+Content-Type: application/json
+
+{
+  "nome": "Edmael Teste2",
+  "email": "EdmaeltesteReservaSegura2@email.com",
+  "cpf": "11345678901",
+  "senha": "123421"
+}
+
+### ❌ CT04 - Cadastrar com campos vazios
+POST http://localhost:8080/auth/register
+Content-Type: application/json
+
+{
+  "nome": "",
+  "email": "",
+  "cpf": "",
+  "senha": ""
+}
+
+### ❌ CT05 - Cadastrar sem body
+POST http://localhost:8080/auth/register
+Content-Type: application/json
+
+{}
+
+### ✅ CT06 - Login com sucesso
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "email": "EdmaeltesteReservaSegura@email.com",
+  "senha": "123421"
+}
+
+### ❌ CT07 - Login com senha errada
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "email": "EdmaeltesteReservaSegura@email.com",
+  "senha": "senhaerrada"
+}
+
+### ❌ CT08 - Login com email não cadastrado
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "email": "naoexiste@email.com",
+  "senha": "123421"
+}
+
+### ❌ CT09 - Login sem body
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{}
+### ✅ CT10 - Buscar dados do usuário logado
+GET http://localhost:8080/users/me
+Authorization: Bearer SEU_TOKEN_AQUI
+
+### ✅ CT11 - Criar uma meta (goal)
+POST http://localhost:8080/goals
+Content-Type: application/json
+Authorization: Bearer SEU_TOKEN_AQUI
+
+{
+  "nome": "Viagem para Europa",
+  "valorAlvo": 15000.00
+}
+
+### ✅ CT12 - Buscar todas as metas do usuário
+GET http://localhost:8080/goals
+Authorization: Bearer SEU_TOKEN_AQUI
+
+### ✅ CT13 - Adicionar transação (depósito em uma meta)
+POST http://localhost:8080/transactions
+Content-Type: application/json
+Authorization: Bearer SEU_TOKEN_AQUI
+
+{
+  "goalId": "ID_DA_META_AQUI",
+  "valor": 500.00,
+  "tipo": "DEPOSITO"
+}
+
+### ✅ CT14 - Buscar todas as transações
+GET http://localhost:8080/transactions
+Authorization: Bearer SEU_TOKEN_AQUI
+
+### ✅ CT15 - Atualizar uma meta
+PUT http://localhost:8080/goals/ID_DA_META_AQUI
+Content-Type: application/json
+Authorization: Bearer SEU_TOKEN_AQUI
+
+{
+  "nome": "Viagem para Europa 2027",
+  "valorAlvo": 20000.00
+}
+
+### ✅ CT16 - Deletar uma meta
+DELETE http://localhost:8080/goals/ID_DA_META_AQUI
+Authorization: Bearer SEU_TOKEN_AQUI
