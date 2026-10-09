@@ -153,6 +153,9 @@ mvn spring-boot:run
 
 A API estará disponível em: `http://localhost:8080`
 
+Perfils para realizar Login: allan@email.com | Senha: 123456
+                             maria@email.com | Senha: 123456
+                             joao@email.com  | Senha: 123456
 ---
 
 ## 📁 Estrutura do Projeto
