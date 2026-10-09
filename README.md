@@ -153,9 +153,14 @@ mvn spring-boot:run
 
 A API estará disponível em: `http://localhost:8080`
 
-Perfils para realizar Login: allan@email.com | Senha: 123456
-                             maria@email.com | Senha: 123456
-                             joao@email.com  | Senha: 123456
+> ### 🔑 Perfis de Teste para Login
+> Utilize as credenciais abaixo para acessar o sistema localmente com dados já preenchidos:
+> 
+> | Perfil | E-mail | Senha |
+> | :--- | :--- | :--- |
+> | 🧑‍💻 **Allan** | `allan@email.com` | `123456` |
+> | 👩‍💻 **Maria** | `maria@email.com` | `123456` |
+> | 👨‍💻 **João**  | `joao@email.com` | `123456` |
 ---
 
 ## 📁 Estrutura do Projeto
